@@ -16,7 +16,7 @@ export default defineConfig({
   //   localsConvention: 'camelCase'
   // },
   // 默认是 umi
-  // chunks: ['vendors', 'umi'],
+  chunks: ['vendors', 'umi'],
   // 通过 webpack-chain 的 API 修改 webpack 配置。
   chainWebpack: function(config, { webpack }) {
     if (prod) {
@@ -32,27 +32,27 @@ export default defineConfig({
 
     // TODO：开启 optimization 启动项目会卡住，进度在 90 % 左右，
     // github 也没有看到有好的解决方案
-    // config.merge({
-    //   // 代码提取 优化
-    //   optimization: {
-    //     minimize: !prod,
-    //     splitChunks: {
-    //       chunks: 'all',
-    //       minSize: 20000,
-    //       minChunks: 1,
-    //       automaticNameDelimiter: '.',
-    //       cacheGroups: {
-    //         vendor: {
-    //           name: 'vendors',
-    //           test({ resource }) {
-    //             return /[\\/]node_modules[\\/]/.test(resource);
-    //           },
-    //           priority: -10,
-    //         },
-    //       },
-    //     },
-    //   }
-    // });
+    config.merge({
+      // 代码提取 优化
+      optimization: {
+        minimize: !prod,
+        splitChunks: {
+          chunks: 'all',
+          minSize: 20000,
+          minChunks: 1,
+          automaticNameDelimiter: '.',
+          cacheGroups: {
+            vendor: {
+              name: 'vendors',
+              test({ resource }) {
+                return /[\\/]node_modules[\\/]/.test(resource);
+              },
+              priority: -10,
+            },
+          },
+        },
+      },
+    });
   },
   // 按需加载
   dynamicImport: {
