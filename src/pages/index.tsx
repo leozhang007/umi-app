@@ -4,7 +4,6 @@ import { useModel } from 'umi';
 
 export default () => {
   const { initialState, loading, refresh } = useModel('@@initialState');
-  debugger;
   return (
     <div>
       {initialState.ready}
